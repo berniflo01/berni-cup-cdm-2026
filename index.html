@@ -605,21 +605,21 @@ async function chargerPronosticsExistants() {
       if (sel) sel.value = data.pronostics.premier;
       const cote = EQUIPES_CDM.find(e => e.nom === data.pronostics.premier)?.cote || '—';
       const el = document.getElementById('cote-premier');
-      if (el) el.textContent = `${cote} pts`;
+      if (el) el.textContent = `${data.pronostics.premier} — ${cote} pts`;
     }
     if (data.pronostics.deuxieme) {
       const sel = document.getElementById('sel-deuxieme');
       if (sel) sel.value = data.pronostics.deuxieme;
       const cote = EQUIPES_CDM.find(e => e.nom === data.pronostics.deuxieme)?.cote || '—';
       const el = document.getElementById('cote-deuxieme');
-      if (el) el.textContent = `${cote} pts`;
+      if (el) el.textContent = `${data.pronostics.deuxieme} — ${cote} pts`;
     }
     if (data.pronostics.buteur) {
       const sel = document.getElementById('sel-buteur');
       if (sel) sel.value = data.pronostics.buteur;
       const cote = BUTEURS_CDM.find(b => b.nom === data.pronostics.buteur)?.cote || '—';
       const el = document.getElementById('cote-buteur');
-      if (el) el.textContent = `${cote} pts`;
+      if (el) el.textContent = `${data.pronostics.buteur} — ${cote} pts`;
     }
   } catch(e) {}
 }
