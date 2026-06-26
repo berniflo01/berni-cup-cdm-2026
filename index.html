@@ -134,12 +134,14 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
   padding: 12px 14px 8px; display: flex; align-items: center; justify-content: space-between;
 }
 .team { flex: 1; text-align: center; }
-.team-name { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.2; }
-.team-cote { font-size: 17px; font-weight: 700; margin-top: 3px; color: var(--green); }
+/* MODIF : noms plus gros */
+.team-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
+/* MODIF : cotes en or par défaut */
+.team-cote { font-size: 17px; font-weight: 700; margin-top: 3px; color: var(--gold); }
 .cote-label { font-size: 9px; letter-spacing: 1px; color: var(--text-muted); margin-top: 1px; }
 .vs { font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--text-muted); padding: 0 6px; flex-shrink: 0; }
 
-/* BOUTONS 1/N/2 */
+/* BOUTONS 1/n/2 */
 .prono-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--border); }
 .prono-btn {
   background: none; border: none; padding: 12px 0;
@@ -162,7 +164,6 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
   display: flex; align-items: center; justify-content: center; gap: 10px;
 }
 .score-field { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.score-label { font-size: 11px; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: 0.5px; }
 .score-input {
   width: 68px; background: var(--surface2); border: 2px solid var(--gold);
   border-radius: var(--radius-sm); color: #fff; font-family: 'Bebas Neue', sans-serif;
@@ -171,7 +172,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 }
 .score-input:focus { border-color: var(--amber); }
 .score-input::-webkit-inner-spin-button, .score-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.score-sep { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--text); margin-top: 20px; }
+.score-sep { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--text); margin-top: 0; }
 
 /* NAV */
 .bottom-nav {
@@ -509,41 +510,34 @@ const MATCHS_CDM = [
   {row:131,poule:'Finale',date:'2026-07-19',heure:'21h00',datetime:'2026-07-19T21:00:00',dom:`Vainqueur DF1`,ext:`Vainqueur DF2`,c1:0.0,cn:0.0,c2:0.0,scoreExact:true}
 ];
 
-
 // ════ STATE ════
 let currentUser = null;
-let pronos = {};   // row -> '1'|'N'|'2'
-let scores = {};   // row -> {dom, ext}
-let matchsVerrouilles = new Set(); // rows avec résultat réel
-let resultatsReels = {}; // row -> {resultat, scoreExtReel}
+let pronos = {};
+let scores = {};
+let matchsVerrouilles = new Set();
+let resultatsReels = {};
 let currentPhase = 'groupes';
 let currentPoule = 'Tous';
 let savingRows = new Set();
 let pronosCharges = false;
-
 
 // ════ DONNÉES PRONOSTICS ════
 const EQUIPES_CDM = [{"nom": "Espagne", "cote": 3.25}, {"nom": "France", "cote": 3.5}, {"nom": "Angleterre", "cote": 4.25}, {"nom": "Argentine", "cote": 5}, {"nom": "Brésil", "cote": 5}, {"nom": "Portugal", "cote": 5.5}, {"nom": "Allemagne", "cote": 6.5}, {"nom": "Pays-Bas", "cote": 9}, {"nom": "Belgique", "cote": 15}, {"nom": "Norvège", "cote": 15}, {"nom": "Colombie", "cote": 20}, {"nom": "Maroc", "cote": 20}, {"nom": "Japon", "cote": 25}, {"nom": "Mexique", "cote": 25}, {"nom": "Uruguay", "cote": 25}, {"nom": "USA", "cote": 25}, {"nom": "Croatie", "cote": 30}, {"nom": "Suisse", "cote": 30}, {"nom": "Turquie", "cote": 30}, {"nom": "Équateur", "cote": 35}, {"nom": "Sénégal", "cote": 40}, {"nom": "Autriche", "cote": 50}, {"nom": "Suède", "cote": 50}, {"nom": "Autres", "cote": "X"}];
 const BUTEURS_CDM = [{"nom": "Mbappé", "cote": 6}, {"nom": "Kane", "cote": 7.5}, {"nom": "Haaland", "cote": 13}, {"nom": "Oyarzabal", "cote": 13}, {"nom": "Messi", "cote": 15}, {"nom": "C. Ronaldo", "cote": 20}, {"nom": "Yamal", "cote": 25}, {"nom": "Alvares", "cote": 30}, {"nom": "Dembélé", "cote": 30}, {"nom": "Raphinha", "cote": 30}, {"nom": "Vinicius Jr", "cote": 35}, {"nom": "Lautaro Martinez", "cote": 40}, {"nom": "Gakpo", "cote": 45}, {"nom": "Havertz", "cote": 50}, {"nom": "Igor Thiago", "cote": 60}, {"nom": "Woltemade", "cote": 60}, {"nom": "Diaz Luis", "cote": 65}, {"nom": "Fernandes Bruno", "cote": 75}, {"nom": "Saka", "cote": 75}, {"nom": "Olmo", "cote": 75}, {"nom": "Doué", "cote": 75}, {"nom": "Malen", "cote": 75}, {"nom": "Torres", "cote": 75}, {"nom": "Wirtz", "cote": 75}, {"nom": "Musiala", "cote": 75}, {"nom": "Rashford", "cote": 75}, {"nom": "Cunha", "cote": 75}, {"nom": "Depay", "cote": 75}, {"nom": "Olise", "cote": 75}, {"nom": "Lukaku", "cote": 75}, {"nom": "Gyokeres", "cote": 75}, {"nom": "Autres", "cote": "X"}];
 const DEADLINE_PRONOSTICS = '2026-06-11T21:00:00';
 
-// ════ PRONOSTICS AVANT MATCH ════
-let pronosticsData = {}; // {premier, deuxieme, buteur}
+let pronosticsData = {};
 let pronosticsVerrouilles = new Date() >= new Date(DEADLINE_PRONOSTICS);
 
 async function renderPronostics() {
   document.getElementById('prono-header-name').textContent = currentUser.split(' ')[0];
-  
   const container = document.getElementById('pronostics-container');
   const locked = pronosticsVerrouilles;
-
   if (locked) {
     document.getElementById('prono-deadline-info').textContent = '🔒 Verrouillé depuis le 11 juin 21h00';
     document.getElementById('prono-deadline-info').style.color = 'var(--red)';
   }
-
   container.innerHTML = `
-    <!-- 1er -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
       <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px"><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px">🥇 Champion du Monde</div><div style="font-size:11px;color:var(--green);font-weight:600;letter-spacing:0.5px">Côte ×2 si votre équipe est bien placée</div></div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:10px">
@@ -556,8 +550,6 @@ async function renderPronostics() {
       </select>`}
       ${locked && pronosticsData.premier ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.premier}</div>` : ''}
     </div>
-
-    <!-- 2ème -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
       <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px"><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px">🥈 Finaliste</div><div style="font-size:11px;color:var(--green);font-weight:600;letter-spacing:0.5px">Côte ×2 si votre équipe est bien placée</div></div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:10px">
@@ -570,8 +562,6 @@ async function renderPronostics() {
       </select>`}
       ${locked && pronosticsData.deuxieme ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.deuxieme}</div>` : ''}
     </div>
-
-    <!-- Meilleur Buteur -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px;margin-bottom:12px">⚽ Meilleur Buteur</div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:10px">
@@ -585,8 +575,6 @@ async function renderPronostics() {
       ${locked && pronosticsData.buteur ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.buteur}</div>` : ''}
     </div>
   `;
-
-  // Charger les valeurs existantes
   await chargerPronosticsExistants();
 }
 
@@ -596,8 +584,6 @@ async function chargerPronosticsExistants() {
     const data = await res.json();
     if (!data.ok) return;
     pronosticsData = data.pronostics;
-
-    // Mettre à jour les selects
     if (data.pronostics.premier) {
       const sel = document.getElementById('sel-premier');
       if (sel) sel.value = data.pronostics.premier;
@@ -624,21 +610,16 @@ async function chargerPronosticsExistants() {
 
 async function savePronostic(type) {
   if (pronosticsVerrouilles) return;
-
   const selId = type === 'premier' ? 'sel-premier' : type === 'deuxieme' ? 'sel-deuxieme' : 'sel-buteur';
   const coteId = type === 'premier' ? 'cote-premier' : type === 'deuxieme' ? 'cote-deuxieme' : 'cote-buteur';
   const sel = document.getElementById(selId);
   if (!sel || !sel.value) return;
-
   const val = sel.value;
   const liste = type === 'buteur' ? BUTEURS_CDM : EQUIPES_CDM;
   const cote = liste.find(e => e.nom === val)?.cote || '—';
-  
   const el = document.getElementById(coteId);
   if (el) el.textContent = `${cote} pts`;
-
   pronosticsData[type] = val;
-
   try {
     await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
@@ -660,29 +641,19 @@ function init() {
     sel.appendChild(opt);
   });
   document.getElementById('input-mdp').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
-
   const saved = localStorage.getItem('cdm26_user');
   if (saved && JOUEURS_MDP[saved]) {
     currentUser = saved;
     showApp();
   }
-
-  // Rafraîchissement auto toutes les minutes
   setInterval(() => {
-    if (currentUser && document.getElementById('app-screen').style.display !== 'none') {
-      renderPhase();
-    }
+    if (currentUser && document.getElementById('app-screen').style.display !== 'none') renderPhase();
   }, 60000);
-
-  // Rafraîchissement quand on revient sur l'onglet navigateur
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && currentUser && document.getElementById('app-screen').style.display !== 'none') {
-      renderPhase();
-    }
+    if (!document.hidden && currentUser && document.getElementById('app-screen').style.display !== 'none') renderPhase();
   });
 }
 
-// ════ LOGIN ════
 function login() {
   const joueur = document.getElementById('select-joueur').value;
   const mdp = document.getElementById('input-mdp').value;
@@ -711,23 +682,18 @@ function logout() {
   document.getElementById('input-mdp').value = '';
 }
 
-// ════ APP ════
 async function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app-screen').style.display = 'block';
   document.getElementById('bottom-nav').style.display = 'flex';
   document.getElementById('header-name').textContent = currentUser.split(' ')[0];
-
-  // Charger tous les pronos + cotes en une fois
   if (!pronosCharges) {
     await Promise.all([chargerTousLesPronos(), chargerCotes()]);
     pronosCharges = true;
   }
-
   renderPhase();
 }
 
-// ════ CHARGER COTES ════
 async function chargerCotes() {
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?action=cotes_cdm`);
@@ -735,18 +701,11 @@ async function chargerCotes() {
     if (!data.ok) return;
     data.cotes.forEach(c => {
       const match = MATCHS_CDM.find(m => m.row === c.row);
-      if (match) {
-        match.c1 = c.c1;
-        match.cn = c.cn;
-        match.c2 = c.c2;
-      }
+      if (match) { match.c1 = c.c1; match.cn = c.cn; match.c2 = c.c2; }
     });
-  } catch(e) {
-    // silencieux
-  }
+  } catch(e) {}
 }
 
-// ════ CHARGER TOUS LES PRONOS ════
 async function chargerTousLesPronos() {
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?action=tous_pronos_cdm&joueur=${encodeURIComponent(currentUser)}`);
@@ -757,18 +716,14 @@ async function chargerTousLesPronos() {
       if (p.scoreExt !== '' && p.scoreExt !== null && p.scoreExt !== undefined) {
         scores[p.row] = { dom: parseInt(p.prono), ext: parseInt(p.scoreExt) };
       }
-      // Verrouiller si résultat réel existe
       if (p.verrouille) {
         matchsVerrouilles.add(p.row);
         resultatsReels[p.row] = { resultat: p.resultat, scoreExtReel: p.scoreExtReel };
       }
     });
-  } catch(e) {
-    // silencieux
-  }
+  } catch(e) {}
 }
 
-// ════ PHASE TABS ════
 function switchPhase(phase) {
   currentPhase = phase;
   currentPoule = 'Tous';
@@ -779,14 +734,11 @@ function switchPhase(phase) {
 
 function renderPhase() {
   const now = new Date();
-  
   if (currentPhase === 'groupes') {
-    // Filtre poules
     const poules = ['Tous', ...new Set(MATCHS_CDM.filter(m => !m.scoreExact).map(m => m.poule))];
     const pf = document.getElementById('poule-filter');
     pf.style.display = 'flex';
     pf.innerHTML = poules.map(p => `<button class="poule-chip ${p === currentPoule ? 'active' : ''}" onclick="setPoule('${p}')">${p === 'Tous' ? 'Tous' : 'Gr. ' + p}</button>`).join('');
-
     const matchs = MATCHS_CDM.filter(m => !m.scoreExact && (currentPoule === 'Tous' || m.poule === currentPoule));
     renderMatchs(matchs, now);
   } else {
@@ -801,21 +753,15 @@ function setPoule(poule) {
   renderPhase();
 }
 
-// ════ RENDER MATCHS ════
 function renderMatchs(matchsList, now) {
   const container = document.getElementById('matchs-container');
   container.innerHTML = '';
-
-  // Séparer passés et à venir — verrouillé si date passée OU résultat déjà dans sheet
   const aVenir = matchsList.filter(m => new Date(m.datetime) > now && !matchsVerrouilles.has(m.row));
   const passes = matchsList.filter(m => new Date(m.datetime) <= now || matchsVerrouilles.has(m.row));
-
   if (aVenir.length === 0 && passes.length === 0) {
     container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Aucun match.</div>';
     return;
   }
-
-  // Matchs à venir — groupés par phase/poule
   if (aVenir.length > 0) {
     let lastGroup = null;
     aVenir.forEach(match => {
@@ -830,8 +776,6 @@ function renderMatchs(matchsList, now) {
       container.appendChild(buildMatchCard(match, false));
     });
   }
-
-  // Séparateur si les deux existent
   if (aVenir.length > 0 && passes.length > 0) {
     const sep = document.createElement('div');
     sep.className = 'section-sep';
@@ -839,8 +783,6 @@ function renderMatchs(matchsList, now) {
     sep.textContent = '🕐 Matchs commencés → voir Historique';
     container.appendChild(sep);
   }
-
-  // Matchs passés (verrouillés, affichés grisés)
   if (passes.length > 0) {
     passes.forEach(match => container.appendChild(buildMatchCard(match, true)));
   }
@@ -853,10 +795,10 @@ function buildMatchCard(match, locked) {
   const score = scores[match.row];
 
   let selClass = '';
-  if (prono === '1') selClass = 'sel-1';
+  if (match.scoreExact && score) selClass = 'sel-score';
+  else if (prono === '1') selClass = 'sel-1';
   else if (prono === 'N') selClass = 'sel-n';
   else if (prono === '2') selClass = 'sel-2';
-  if (match.scoreExact && score) selClass = 'sel-score';
 
   card.className = `match-card ${selClass} ${locked ? 'locked' : ''}`;
   card.id = `card-${match.row}`;
@@ -865,76 +807,89 @@ function buildMatchCard(match, locked) {
   const badgeClass = isFinale ? 'badge-finale' : 'badge-groupe';
   const badgeText = isFinale ? `⭐ ${match.poule}` : `Gr. ${match.poule}`;
 
-  // Badge et surbrillance résultat
   let lockBadge = '';
   let teamDomStyle = '';
   let teamExtStyle = '';
   let vsStyle = '';
-  let cote1Style = '';
-  let coteNStyle = '';
-  let cote2Style = '';
+  // MODIF : cotes en or par défaut, vert seulement si sélectionnée
+  let cote1Color = 'var(--gold)';
+  let coteNColor = 'var(--gold)';
+  let cote2Color = 'var(--gold)';
+  let cote1Extra = '';
+  let coteNExtra = '';
+  let cote2Extra = '';
 
-  // Surbrillance selon le prono pour phases finales non verrouillées
-  if (match.scoreExact && !locked && prono) {
-    if (prono === '1') teamDomStyle = 'color:var(--green);font-weight:800;';
-    else if (prono === 'N') vsStyle = 'color:var(--green);font-weight:800;font-size:20px;';
-    else if (prono === '2') teamExtStyle = 'color:var(--green);font-weight:800;';
+  // Pour phases finales non verrouillées : surbrillance selon score saisi
+  if (match.scoreExact && !locked && score) {
+    const scoreDom = parseInt(score.dom);
+    const scoreExt = parseInt(score.ext);
+    if (!isNaN(scoreDom) && !isNaN(scoreExt)) {
+      if (scoreDom > scoreExt) {
+        teamDomStyle = 'color:var(--green);font-weight:800;';
+        cote1Color = 'var(--green)';
+      } else if (scoreExt > scoreDom) {
+        teamExtStyle = 'color:var(--green);font-weight:800;';
+        cote2Color = 'var(--green)';
+      } else {
+        vsStyle = 'color:var(--green);font-weight:800;font-size:20px;';
+        coteNColor = 'var(--green)';
+      }
+    }
+  }
+
+  // Pour phases groupes non verrouillées : cote sélectionnée en vert
+  if (!match.scoreExact && !locked && prono) {
+    if (prono === '1') { cote1Color = 'var(--green)'; cote1Extra = 'font-weight:800;'; }
+    else if (prono === 'N') { coteNColor = 'var(--green)'; coteNExtra = 'font-weight:800;'; }
+    else if (prono === '2') { cote2Color = 'var(--green)'; cote2Extra = 'font-weight:800;'; }
   }
 
   if (locked && resultatsReels[match.row]) {
     const r = resultatsReels[match.row];
     const res = r.resultat;
     const scoreExt = r.scoreExtReel;
-    
-    // Badge terminé avec score si phases finales
-    const scoreLabel = match.scoreExact && res !== '' && scoreExt !== ''
-      ? `${res} - ${scoreExt}`
-      : res;
+    const scoreLabel = match.scoreExact && res !== '' && scoreExt !== '' ? `${res} - ${scoreExt}` : res;
     lockBadge = `<span class="match-badge badge-lock">✅ ${scoreLabel}</span>`;
-
-    // Surbrillance équipe gagnante et sa cote
     if (String(res) === '1') {
       teamDomStyle = 'color:#000;font-weight:800;background:var(--green);padding:2px 8px;border-radius:6px;';
-      cote1Style = 'background:var(--green);color:#000;font-weight:800;border-radius:4px;padding:2px 8px;';
+      cote1Color = 'var(--green)'; cote1Extra = 'font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';
     } else if (String(res) === '2') {
       teamExtStyle = 'color:#000;font-weight:800;background:var(--green);padding:2px 8px;border-radius:6px;';
-      cote2Style = 'background:var(--green);color:#000;font-weight:800;border-radius:4px;padding:2px 8px;';
+      cote2Color = 'var(--green)'; cote2Extra = 'font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';
     } else if (String(res) === 'N') {
-      coteNStyle = 'background:var(--green);color:#000;font-weight:800;border-radius:4px;padding:2px 8px;';
+      coteNColor = 'var(--green)'; coteNExtra = 'font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';
     }
   } else if (locked) {
     lockBadge = '<span class="match-badge badge-lock">🔒 Commencé</span>';
   }
 
-  const cotesHtml = match.c1 > 0 ? `
-    <div class="team-cote" style="${cote1Style}">${match.c1.toFixed(2)}</div>
-    <div class="cote-label">Victoire</div>` : '';
-  const coteNHtml = match.cn > 0 ? `
-    <div style="font-size:17px;font-weight:700;color:var(--green);margin-top:3px;${coteNStyle}">${match.cn.toFixed(2)}</div>
-    <div class="cote-label">Nul</div>` : '';
-  const cote2Html = match.c2 > 0 ? `
-    <div class="team-cote" style="${cote2Style}">${match.c2.toFixed(2)}</div>
-    <div class="cote-label">Victoire</div>` : '';
-
+  // MODIF : pas de label au-dessus des scores, score-sep sans margin-top
   const scoreHtml = match.scoreExact && !locked ? `
     <div class="score-input-zone">
       <div class="score-field">
-        <div class="score-label">${match.dom.split(' ').slice(0,2).join(' ')}</div>
         <input class="score-input" type="number" min="0" max="20" id="score-${match.row}-dom"
           placeholder="0" value="${score ? score.dom : ''}" oninput="handleScore(${match.row})">
       </div>
       <div class="score-sep">–</div>
       <div class="score-field">
-        <div class="score-label">${match.ext.split(' ').slice(0,2).join(' ')}</div>
         <input class="score-input" type="number" min="0" max="20" id="score-${match.row}-ext"
           placeholder="0" value="${score ? score.ext : ''}" oninput="handleScore(${match.row})">
       </div>
     </div>` : '';
 
+  const cotesHtml = match.c1 > 0 ? `
+    <div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote1Color};${cote1Extra}">${match.c1.toFixed(2)}</div>
+    <div class="cote-label">Victoire</div>` : '';
+  const coteNHtml = match.cn > 0 ? `
+    <div style="font-size:17px;font-weight:700;margin-top:3px;color:${coteNColor};${coteNExtra}">${match.cn.toFixed(2)}</div>
+    <div class="cote-label">Nul</div>` : '';
+  const cote2Html = match.c2 > 0 ? `
+    <div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote2Color};${cote2Extra}">${match.c2.toFixed(2)}</div>
+    <div class="cote-label">Victoire</div>` : '';
+
   const btn1Class = prono === '1' ? 'a-1' : '';
   const btnNClass = prono === 'N' ? 'a-n' : '';
   const btn2Class = prono === '2' ? 'a-2' : '';
-
   const savingHtml = `<div class="saving-indicator" id="saving-${match.row}" style="display:none">💾 Sauvegarde...</div>`;
 
   card.innerHTML = `
@@ -967,11 +922,9 @@ function buildMatchCard(match, locked) {
     ${scoreHtml}
     ${savingHtml}
   `;
-
   return card;
 }
 
-// ════ PRONO + SAUVEGARDE AUTO ════
 async function handleProno(row, val) {
   pronos[row] = val;
   updateCardUI(row, val);
@@ -985,31 +938,45 @@ async function handleScore(row) {
   const dom = domEl.value;
   const ext = extEl.value;
   if (dom === '' || ext === '') return;
-
   const d = parseInt(dom), e = parseInt(ext);
   if (isNaN(d) || isNaN(e)) return;
-
   scores[row] = { dom: d, ext: e };
   const res = d > e ? '1' : d < e ? '2' : 'N';
   pronos[row] = res;
   updateCardUI(row, res);
 
-  // Surbrillance visuelle pour phases finales
+  // MODIF : surbrillance correcte selon qui gagne
   const card = document.getElementById(`card-${row}`);
   if (card) {
     const teamDom = card.querySelector('.match-teams .team:first-child .team-name');
     const teamExt = card.querySelector('.match-teams .team:last-child .team-name');
     const vs = card.querySelector('.vs');
-    const resetStyle = 'color:var(--text);font-weight:700;';
+    const coteDom = card.querySelector('.match-teams .team:first-child [style*="font-size:17px"]');
+    const coteExt = card.querySelector('.match-teams .team:last-child [style*="font-size:17px"]');
+    const coteN = card.querySelector('.match-teams > div:nth-child(2) [style*="font-size:17px"]');
+
+    const resetStyle = 'font-size:18px;font-weight:700;color:var(--text);line-height:1.2;';
     if (teamDom) teamDom.style.cssText = resetStyle;
     if (teamExt) teamExt.style.cssText = resetStyle;
     if (vs) vs.style.cssText = '';
-    if (res === '1' && teamDom) teamDom.style.cssText = 'color:var(--green);font-weight:800;';
-    else if (res === '2' && teamExt) teamExt.style.cssText = 'color:var(--green);font-weight:800;';
-    else if (res === 'N' && vs) vs.style.cssText = 'color:var(--green);font-weight:800;font-size:20px;';
+
+    // Reset cotes en or
+    if (coteDom) coteDom.style.color = 'var(--gold)';
+    if (coteExt) coteExt.style.color = 'var(--gold)';
+    if (coteN) coteN.style.color = 'var(--gold)';
+
+    if (res === '1') {
+      if (teamDom) teamDom.style.cssText = 'font-size:18px;font-weight:800;color:var(--green);line-height:1.2;';
+      if (coteDom) coteDom.style.color = 'var(--green)';
+    } else if (res === '2') {
+      if (teamExt) teamExt.style.cssText = 'font-size:18px;font-weight:800;color:var(--green);line-height:1.2;';
+      if (coteExt) coteExt.style.color = 'var(--green)';
+    } else {
+      if (vs) vs.style.cssText = 'color:var(--green);font-weight:800;font-size:20px;';
+      if (coteN) coteN.style.color = 'var(--green)';
+    }
   }
 
-  // Debounce 800ms
   if (window[`scoreTimer_${row}`]) clearTimeout(window[`scoreTimer_${row}`]);
   window[`scoreTimer_${row}`] = setTimeout(() => sauvegarder(row, res, d, e), 800);
 }
@@ -1017,34 +984,25 @@ async function handleScore(row) {
 async function sauvegarder(row, prono, scoredom, scoreext) {
   if (savingRows.has(row)) return;
   savingRows.add(row);
-
   const savEl = document.getElementById(`saving-${row}`);
   if (savEl) savEl.style.display = 'block';
-
   try {
     const payload = {
       joueur: currentUser,
-      pronos: [scoredom !== null
-        ? { row, prono, scoredom, scoreext }
-        : { row, prono }
-      ]
+      pronos: [scoredom !== null ? { row, prono, scoredom, scoreext } : { row, prono }]
     };
-
     const res = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'text/plain' }
     });
     const data = await res.json();
-
     if (data?.error === 'VERROUILLE') {
       showToast('🔒 Match déjà commencé petit coquin 😄');
-      // Annuler le prono visuellement
       delete pronos[row];
       updateCardUI(row, null);
     }
   } catch(e) {
-    // silencieux
   } finally {
     savingRows.delete(row);
     if (savEl) savEl.style.display = 'none';
@@ -1054,15 +1012,10 @@ async function sauvegarder(row, prono, scoredom, scoreext) {
 function updateCardUI(row, val) {
   const card = document.getElementById(`card-${row}`);
   if (!card) return;
-  
-  // Retirer les classes de sélection
   card.classList.remove('sel-1', 'sel-n', 'sel-2', 'sel-score');
-  
   if (val === '1') card.classList.add('sel-1');
   else if (val === 'N') card.classList.add('sel-n');
   else if (val === '2') card.classList.add('sel-2');
-
-  // Mettre à jour les boutons
   ['1','n','2'].forEach(b => {
     const btn = card.querySelector(`.prono-btn.a-${b}`);
     if (btn) btn.className = 'prono-btn';
@@ -1073,14 +1026,12 @@ function updateCardUI(row, val) {
   }
 }
 
-// ════ NAVIGATION ════
 function switchTab(tab) {
   ['pronos','historique','classement'].forEach(t => document.getElementById(`nav-${t}`).classList.remove('active'));
   document.getElementById(`nav-${tab}`).classList.add('active');
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('historique-screen').style.display = 'none';
   document.getElementById('classement-screen').style.display = 'none';
-
   document.getElementById('pronostics-screen').style.display = 'none';
   if (tab === 'pronos') {
     document.getElementById('app-screen').style.display = 'block';
@@ -1096,37 +1047,29 @@ function switchTab(tab) {
   }
 }
 
-// ════ HISTORIQUE ════
 async function chargerHistorique() {
   const container = document.getElementById('historique-container');
   container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Chargement...</div>';
-
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?action=historique_cdm&joueur=${encodeURIComponent(currentUser)}`);
     const data = await res.json();
-
     if (!data.ok || !data.matchs?.length) {
       container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Aucun match terminé pour l&#39;instant.</div>';
       return;
     }
-
     document.getElementById('histo-total').textContent = `Total : ${(data.total || 0).toFixed(2)} pts`;
     document.getElementById('histo-name').textContent = currentUser.split(' ')[0];
-
     const grouped = {};
     data.matchs.forEach(m => {
       if (!grouped[m.date]) grouped[m.date] = [];
       grouped[m.date].push(m);
     });
-
     container.innerHTML = '';
     const dates = Object.keys(grouped).sort();
     const derniereDate = dates[dates.length - 1];
-
     dates.reverse().forEach(date => {
       const d = new Date(date + 'T12:00:00');
       const ptsDuJour = grouped[date].reduce((s, m) => s + (m.points || 0), 0);
-
       const header = document.createElement('div');
       header.className = 'histo-date-header';
       header.style.cursor = 'pointer';
@@ -1134,22 +1077,15 @@ async function chargerHistorique() {
       const isLatest = date === derniereDate;
       header.innerHTML = `<span>${d.toLocaleDateString('fr-FR', {weekday:'long',day:'numeric',month:'long'})}</span><div style="display:flex;align-items:center;gap:10px"><span style="color:var(--amber);font-family:'Bebas Neue',sans-serif;font-size:16px">+${ptsDuJour.toFixed(2)} pts</span><span id="arrow-${date}" style="color:var(--gold);font-size:14px">${isLatest ? '▲' : '▼'}</span></div>`;
       container.appendChild(header);
-
       const card = document.createElement('div');
       card.className = 'histo-match-card';
       card.id = `card-date-${date}`;
       card.style.display = isLatest ? 'block' : 'none';
-
       header.onclick = () => {
         const arrow = document.getElementById(`arrow-${date}`);
         const c = document.getElementById(`card-date-${date}`);
-        if (c.style.display === 'none') {
-          c.style.display = 'block';
-          arrow.textContent = '▲';
-        } else {
-          c.style.display = 'none';
-          arrow.textContent = '▼';
-        }
+        if (c.style.display === 'none') { c.style.display = 'block'; arrow.textContent = '▲'; }
+        else { c.style.display = 'none'; arrow.textContent = '▼'; }
       };
       card.innerHTML = grouped[date].map(m => {
         const bon = m.prono && m.resultat && String(m.prono) === String(m.resultat);
@@ -1158,29 +1094,21 @@ async function chargerHistorique() {
         if (!m.resultat) {
           cls = 'neutre';
         } else if (m.scoreExact) {
-          // Phase finale : comparer prono joueur avec resultatK (1/N/2 calculé)
-          const pronoJoueur = String(m.prono); // score dom saisi par joueur
+          const pronoJoueur = String(m.prono);
           const scoreExtJoueur = String(m.scoreExt);
-          const scoredomReel = String(m.resultat);
-          const scoreextReel = String(m.scoreExt); // pas utilisé ici
           const resultatK = String(m.resultatK || '');
-          
-          // Score exact = prono dom == score dom réel ET score ext joueur == score ext réel
           const estScoreExact = bon;
-          // Bon résultat = prono 1/N/2 correspond au résultat calculé K
           const bonResultat = resultatK && (
             (parseInt(pronoJoueur) > parseInt(scoreExtJoueur) && resultatK === '1') ||
             (parseInt(pronoJoueur) < parseInt(scoreExtJoueur) && resultatK === '2') ||
             (parseInt(pronoJoueur) === parseInt(scoreExtJoueur) && resultatK === 'N')
           );
-          
           if (estScoreExact) cls = 'bon';
           else if (bonResultat) cls = 'partiel';
           else cls = 'mauvais';
         } else {
           cls = bon ? 'bon' : 'mauvais';
         }
-        const matchId = `match-${m.row}`;
         return `<div>
           <div class="histo-match-row">
             <div class="histo-teams">${m.dom} / ${m.ext}</div>
@@ -1203,36 +1131,26 @@ async function chargerHistorique() {
   }
 }
 
-// ════ PRONOS DE TOUS ════
 async function togglePronosTous(row, btn) {
   const container = document.getElementById(`pronos-${row}`);
   if (!container) return;
-
   const isOpen = container.classList.contains('open');
   if (isOpen) {
     container.classList.remove('open');
     btn.textContent = '👥 Voir les pronos des autres';
     return;
   }
-
   container.classList.add('open');
   btn.textContent = '👆 Masquer les pronos';
-
-  // Déjà chargé ?
   if (container.dataset.loaded) return;
-
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?action=pronos_match&row=${row}`);
     const data = await res.json();
-
     if (!data.ok || !data.pronos?.length) {
       container.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Aucun prono disponible.</div>';
       return;
     }
-
-    // Récupérer le résultat réel de ce match depuis l'historique
     const resultatReel = resultatsReels[row]?.resultat || '';
-
     container.innerHTML = data.pronos.map(p => {
       const bon = resultatReel && String(p.prono) === String(resultatReel);
       const isMoi = p.nom === currentUser || p.nom.toLowerCase() === currentUser.toLowerCase();
@@ -1242,27 +1160,22 @@ async function togglePronosTous(row, btn) {
         <div class="prono-joueur-val ${cls}">${p.prono}</div>
       </div>`;
     }).join('');
-
     container.dataset.loaded = '1';
   } catch(e) {
     container.innerHTML = '<div style="text-align:center;color:var(--red);font-size:12px;padding:8px">Erreur de chargement.</div>';
   }
 }
 
-// ════ CLASSEMENT ════
 async function chargerClassement() {
   const container = document.getElementById('classement-container');
   container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Chargement...</div>';
-
   try {
     const res = await fetch(`${APPS_SCRIPT_URL}?action=classement_cdm`);
     const data = await res.json();
-
     if (!data.ok || !data.classement?.length) {
       container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Classement non disponible.</div>';
       return;
     }
-
     document.getElementById('cls-updated').textContent = `Mis à jour : ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
     container.innerHTML = data.classement.map(p => {
       const isMoi = p.nom === currentUser;
@@ -1285,7 +1198,6 @@ async function chargerClassement() {
   }
 }
 
-// ════ TOAST ════
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
