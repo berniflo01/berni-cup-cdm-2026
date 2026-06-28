@@ -1099,8 +1099,7 @@ async function chargerHistorique() {
       };
       card.innerHTML = grouped[date].map(m => {
         const bon = m.prono && m.resultat && String(m.prono) === String(m.resultat);
-        const pronoLabel = m.scoreExact && m.scoreExt !== '' ? `${m.prono}-${m.scoreExt}` : (m.prono || '—');
-        let cls;
+        const pronoLabel = m.prono || '—';
         if (!m.resultat) {
           cls = 'neutre';
         } else if (m.scoreExact) {
