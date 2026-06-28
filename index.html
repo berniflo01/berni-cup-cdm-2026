@@ -1041,8 +1041,18 @@ function switchTab(tab) {
   } else if (tab === 'historique') {
     document.getElementById('historique-screen').style.display = 'block';
     chargerHistorique();
-  } else if (tab === 'classement') {
-    document.getElementById('classement-screen').style.display = 'block';
+  } else if (m.scoreExact) {
+  // Score exact = prono dom == réel dom ET prono ext == réel ext
+  const estScoreExact = m.pronoDom === m.resultatDom && m.pronoExtVal === m.resultatExtVal;
+  // Bon résultat = même vainqueur
+  const bonResultat = m.resultatK && (
+    (parseInt(m.pronoDom) > parseInt(m.pronoExtVal) && m.resultatK === '1') ||
+    (parseInt(m.pronoDom) < parseInt(m.pronoExtVal) && m.resultatK === '2') ||
+    (parseInt(m.pronoDom) === parseInt(m.pronoExtVal) && m.resultatK === 'N')
+  );
+  if (estScoreExact) cls = 'bon';
+  else if (bonResultat) cls = 'partiel';
+  else cls = 'mauvais';
     chargerClassement();
   }
 }
