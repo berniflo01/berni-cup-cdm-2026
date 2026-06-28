@@ -35,6 +35,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100dvh; overflow-x: hidden; }
 
+/* LOGIN */
 #login-screen {
   min-height: 100dvh; display: flex; flex-direction: column;
   align-items: center; justify-content: center; padding: 24px;
@@ -58,16 +59,19 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 .btn-primary:active { transform: scale(0.98); opacity: 0.9; }
 .error-msg { background: var(--red-dim); border: 1px solid var(--red); color: var(--red); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
 
+/* APP */
 #app-screen { display: none; min-height: 100dvh; padding-bottom: 80px; }
 .app-header {
   position: sticky; top: 0; z-index: 100; background: var(--bg);
   border-bottom: 1px solid var(--border); padding: 12px 16px;
   display: flex; align-items: center; justify-content: space-between;
 }
+.header-logo { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--gold); }
 .header-user { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
 .header-user span { color: var(--text); font-weight: 600; font-size: 13px; }
 .logout-btn { background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--text-muted); font-size: 11px; padding: 4px 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
 
+/* TABS GROUPES/FINALES */
 .phase-tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 57px; z-index: 99; }
 .phase-tab {
   flex: 1; background: none; border: none; padding: 12px; text-align: center;
@@ -77,6 +81,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 }
 .phase-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
 
+/* SOUS-FILTRE POULE */
 .poule-filter {
   display: flex; gap: 8px; padding: 10px 12px;
   overflow-x: auto; scrollbar-width: none;
@@ -92,6 +97,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 }
 .poule-chip.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
 
+/* SECTION TITRE */
 .section-sep {
   font-size: 10px; font-weight: 700; letter-spacing: 2px;
   text-transform: uppercase; color: var(--text-muted); padding: 14px 16px 6px;
@@ -99,6 +105,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 }
 .section-sep::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
+/* MATCH CARD */
 .match-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); margin: 0 12px 10px; overflow: hidden;
@@ -127,10 +134,14 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
   padding: 12px 14px 8px; display: flex; align-items: center; justify-content: space-between;
 }
 .team { flex: 1; text-align: center; }
+/* MODIF : noms plus gros */
 .team-name { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1.2; }
+/* MODIF : cotes en or par défaut */
+.team-cote { font-size: 17px; font-weight: 700; margin-top: 3px; color: var(--gold); }
 .cote-label { font-size: 9px; letter-spacing: 1px; color: var(--text-muted); margin-top: 1px; }
 .vs { font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--text-muted); padding: 0 6px; flex-shrink: 0; }
 
+/* BOUTONS 1/n/2 */
 .prono-buttons { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--border); }
 .prono-btn {
   background: none; border: none; padding: 12px 0;
@@ -147,6 +158,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
   padding: 4px; letter-spacing: 1px;
 }
 
+/* SCORE INPUT */
 .score-input-zone {
   border-top: 1px solid var(--border); padding: 10px 14px;
   display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -160,8 +172,9 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 }
 .score-input:focus { border-color: var(--amber); }
 .score-input::-webkit-inner-spin-button, .score-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.score-sep { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--text); }
+.score-sep { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--text); margin-top: 0; }
 
+/* NAV */
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0;
   background: var(--surface); border-top: 1px solid var(--border);
@@ -176,8 +189,10 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 .nav-btn.active { color: var(--gold); }
 .nav-btn svg { width: 20px; height: 20px; }
 
+/* ÉCRANS SEC */
 #historique-screen, #classement-screen { display: none; min-height: 100dvh; padding-bottom: 80px; }
 
+/* HISTORIQUE */
 .histo-date-header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 12px 16px 4px; font-size: 11px; font-weight: 700;
@@ -199,10 +214,14 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
   width: 100%; background: none; border: none; border-top: 1px solid var(--border);
   padding: 8px 14px; font-size: 11px; font-weight: 600; letter-spacing: 1px;
   text-transform: uppercase; color: var(--text-muted); cursor: pointer;
-  text-align: left; font-family: 'DM Sans', sans-serif; transition: color 0.2s;
+  text-align: left; font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s;
 }
 .voir-pronos-btn:hover { color: var(--gold); }
-.pronos-tous { background: var(--surface2); border-top: 1px solid var(--border); padding: 8px 14px; display: none; }
+.pronos-tous {
+  background: var(--surface2); border-top: 1px solid var(--border);
+  padding: 8px 14px; display: none;
+}
 .pronos-tous.open { display: block; }
 .prono-joueur-row {
   display: flex; justify-content: space-between; align-items: center;
@@ -210,10 +229,15 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 }
 .prono-joueur-row:last-child { border-bottom: none; }
 .prono-joueur-nom { color: var(--text-sub); flex: 1; }
-.prono-joueur-val { font-weight: 700; font-size: 13px; padding: 1px 8px; border-radius: 4px; min-width: 32px; text-align: center; }
+.prono-joueur-val {
+  font-weight: 700; font-size: 13px; padding: 1px 8px;
+  border-radius: 4px; min-width: 32px; text-align: center;
+}
 
+/* CLASSEMENT */
 .cls-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 8px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
 .cls-row.moi { border-color: var(--gold); background: var(--gold-dim); }
+.cls-row.top3 { border-color: var(--amber); }
 .rang { font-family: 'Bebas Neue', sans-serif; font-size: 24px; min-width: 32px; text-align: center; }
 .rang-1 { color: #FFD700; } .rang-2 { color: #C0C0C0; } .rang-3 { color: #CD7F32; } .rang-other { color: var(--text-muted); }
 .cls-nom { flex: 1; font-weight: 600; font-size: 14px; }
@@ -224,6 +248,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 .gain-bronze { background: #CD7F3230; color: #CD7F32; border: 1px solid #CD7F3260; }
 .gain-green { background: var(--green-dim); color: var(--green); border: 1px solid #00e67640; }
 
+/* TOAST */
 .toast {
   position: fixed; top: 80px; left: 50%; transform: translateX(-50%) translateY(-20px);
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
@@ -231,6 +256,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
   transition: all 0.3s; z-index: 200; white-space: nowrap; max-width: 90vw; text-align: center;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.spinner { width: 18px; height: 18px; border: 2px solid #00000040; border-top-color: #000; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
@@ -238,7 +264,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 
 <!-- LOGIN -->
 <div id="login-screen">
-  <img src="banniere.png" style="height:68px;width:auto;object-fit:contain;margin-bottom:16px;" alt="Challenge CDM">
+ <img src="banniere.png" style="height:68px;width:auto;object-fit:contain;" alt="Challenge CDM">
   <div class="logo">BERNI'S CUP</div>
   <div class="logo-sub">Coupe du Monde 2026</div>
   <div class="login-card">
@@ -257,26 +283,29 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 <!-- APP -->
 <div id="app-screen">
   <div class="app-header">
-    <img src="banniere.png" style="height:44px;width:auto;object-fit:contain;" alt="Challenge CDM">
+    <img src="banniere.png" style="height:68px;width:auto;object-fit:contain;" alt="Challenge CDM">
     <div class="header-user">👤 <span id="header-name">—</span>
       <button class="logout-btn" onclick="logout()">Quitter</button>
     </div>
   </div>
 
+  <!-- TABS PHASE -->
   <div class="phase-tabs">
-    <!-- FIX : tab-finales est active par défaut -->
     <button class="phase-tab" id="tab-groupes" onclick="switchPhase('groupes')">⚽ Phase de Groupes</button>
     <button class="phase-tab active" id="tab-finales" onclick="switchPhase('finales')">🏆 Phases Finales</button>
   </div>
 
+  <!-- FILTRE POULE (groupes seulement) -->
   <div class="poule-filter" id="poule-filter"></div>
+
+  <!-- MATCHS -->
   <div id="matchs-container"></div>
 </div>
 
 <!-- HISTORIQUE -->
 <div id="historique-screen">
   <div class="app-header">
-    <img src="banniere.png" style="height:44px;width:auto;object-fit:contain;" alt="Challenge CDM">
+    <img src="banniere.png" style="height:68px;width:auto;object-fit:contain;" alt="Challenge CDM">
     <div class="header-user">👤 <span id="histo-name">—</span></div>
   </div>
   <div style="padding:16px 16px 8px">
@@ -289,7 +318,7 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
 <!-- CLASSEMENT -->
 <div id="classement-screen">
   <div class="app-header">
-    <img src="banniere.png" style="height:44px;width:auto;object-fit:contain;" alt="Challenge CDM">
+    <img src="banniere.png" style="height:68px;width:auto;object-fit:contain;" alt="Challenge CDM">
     <div style="font-size:12px;color:var(--text-muted)" id="cls-updated">—</div>
   </div>
   <div style="padding:16px 16px 8px">
@@ -298,10 +327,10 @@ select:focus, input[type="password"]:focus { border-color: var(--gold); }
   <div style="padding:0 12px" id="classement-container"></div>
 </div>
 
-<!-- PRONOSTICS -->
+<!-- PRONOSTICS AVANT MATCH -->
 <div id="pronostics-screen" style="display:none">
   <div class="app-header">
-    <img src="banniere.png" style="height:44px;width:auto;object-fit:contain;" alt="Challenge CDM">
+    <img src="banniere.png" style="height:68px;width:auto;object-fit:contain;" alt="Challenge CDM">
     <div class="header-user">👤 <span id="prono-header-name">—</span></div>
   </div>
   <div style="padding:16px 16px 8px">
@@ -487,12 +516,12 @@ let pronos = {};
 let scores = {};
 let matchsVerrouilles = new Set();
 let resultatsReels = {};
-// FIX : 'finales' en minuscule pour correspondre à switchPhase()
 let currentPhase = 'finales';
 let currentPoule = 'Tous';
 let savingRows = new Set();
 let pronosCharges = false;
 
+// ════ DONNÉES PRONOSTICS ════
 const EQUIPES_CDM = [{"nom": "Espagne", "cote": 3.25}, {"nom": "France", "cote": 3.5}, {"nom": "Angleterre", "cote": 4.25}, {"nom": "Argentine", "cote": 5}, {"nom": "Brésil", "cote": 5}, {"nom": "Portugal", "cote": 5.5}, {"nom": "Allemagne", "cote": 6.5}, {"nom": "Pays-Bas", "cote": 9}, {"nom": "Belgique", "cote": 15}, {"nom": "Norvège", "cote": 15}, {"nom": "Colombie", "cote": 20}, {"nom": "Maroc", "cote": 20}, {"nom": "Japon", "cote": 25}, {"nom": "Mexique", "cote": 25}, {"nom": "Uruguay", "cote": 25}, {"nom": "USA", "cote": 25}, {"nom": "Croatie", "cote": 30}, {"nom": "Suisse", "cote": 30}, {"nom": "Turquie", "cote": 30}, {"nom": "Équateur", "cote": 35}, {"nom": "Sénégal", "cote": 40}, {"nom": "Autriche", "cote": 50}, {"nom": "Suède", "cote": 50}, {"nom": "Autres", "cote": "X"}];
 const BUTEURS_CDM = [{"nom": "Mbappé", "cote": 6}, {"nom": "Kane", "cote": 7.5}, {"nom": "Haaland", "cote": 13}, {"nom": "Oyarzabal", "cote": 13}, {"nom": "Messi", "cote": 15}, {"nom": "C. Ronaldo", "cote": 20}, {"nom": "Yamal", "cote": 25}, {"nom": "Alvares", "cote": 30}, {"nom": "Dembélé", "cote": 30}, {"nom": "Raphinha", "cote": 30}, {"nom": "Vinicius Jr", "cote": 35}, {"nom": "Lautaro Martinez", "cote": 40}, {"nom": "Gakpo", "cote": 45}, {"nom": "Havertz", "cote": 50}, {"nom": "Igor Thiago", "cote": 60}, {"nom": "Woltemade", "cote": 60}, {"nom": "Diaz Luis", "cote": 65}, {"nom": "Fernandes Bruno", "cote": 75}, {"nom": "Saka", "cote": 75}, {"nom": "Olmo", "cote": 75}, {"nom": "Doué", "cote": 75}, {"nom": "Malen", "cote": 75}, {"nom": "Torres", "cote": 75}, {"nom": "Wirtz", "cote": 75}, {"nom": "Musiala", "cote": 75}, {"nom": "Rashford", "cote": 75}, {"nom": "Cunha", "cote": 75}, {"nom": "Depay", "cote": 75}, {"nom": "Olise", "cote": 75}, {"nom": "Lukaku", "cote": 75}, {"nom": "Gyokeres", "cote": 75}, {"nom": "Autres", "cote": "X"}];
 const DEADLINE_PRONOSTICS = '2026-06-11T21:00:00';
@@ -510,28 +539,40 @@ async function renderPronostics() {
   }
   container.innerHTML = `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
-      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px"><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px">🥇 Champion du Monde</div></div>
-      <div id="cote-premier" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
-      ${locked ? (pronosticsData.premier ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.premier}</div>` : '') : `<select id="sel-premier" onchange="savePronostic('premier')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px"><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px">🥇 Champion du Monde</div><div style="font-size:11px;color:var(--green);font-weight:600;letter-spacing:0.5px">Côte ×2 si votre équipe est bien placée</div></div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:10px">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;letter-spacing:1px;text-transform:uppercase">Cote sélectionnée</div>
+        <div id="cote-premier" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green)">—</div>
+      </div>
+      ${locked ? '' : `<select id="sel-premier" onchange="savePronostic('premier')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none">
         <option value="">— Choisir une équipe —</option>
-        ${EQUIPES_CDM.map(e => `<option value="${e.nom}">${e.nom} — ${e.cote} pts</option>`).join('')}
+        ${EQUIPES_CDM.map(e => `<option value="${e.nom}" data-cote="${e.cote}">${e.nom} — ${e.cote} pts</option>`).join('')}
       </select>`}
+      ${locked && pronosticsData.premier ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.premier}</div>` : ''}
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px;margin-bottom:12px">🥈 Finaliste</div>
-      <div id="cote-deuxieme" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
-      ${locked ? (pronosticsData.deuxieme ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.deuxieme}</div>` : '') : `<select id="sel-deuxieme" onchange="savePronostic('deuxieme')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none">
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px"><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px">🥈 Finaliste</div><div style="font-size:11px;color:var(--green);font-weight:600;letter-spacing:0.5px">Côte ×2 si votre équipe est bien placée</div></div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:10px">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;letter-spacing:1px;text-transform:uppercase">Cote sélectionnée</div>
+        <div id="cote-deuxieme" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green)">—</div>
+      </div>
+      ${locked ? '' : `<select id="sel-deuxieme" onchange="savePronostic('deuxieme')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none">
         <option value="">— Choisir une équipe —</option>
-        ${EQUIPES_CDM.map(e => `<option value="${e.nom}">${e.nom} — ${e.cote} pts</option>`).join('')}
+        ${EQUIPES_CDM.map(e => `<option value="${e.nom}" data-cote="${e.cote}">${e.nom} — ${e.cote} pts</option>`).join('')}
       </select>`}
+      ${locked && pronosticsData.deuxieme ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.deuxieme}</div>` : ''}
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);letter-spacing:1px;margin-bottom:12px">⚽ Meilleur Buteur</div>
-      <div id="cote-buteur" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
-      ${locked ? (pronosticsData.buteur ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.buteur}</div>` : '') : `<select id="sel-buteur" onchange="savePronostic('buteur')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:10px">
+        <div style="font-size:12px;color:var(--text-muted);font-weight:600;letter-spacing:1px;text-transform:uppercase">Cote sélectionnée</div>
+        <div id="cote-buteur" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green)">—</div>
+      </div>
+      ${locked ? '' : `<select id="sel-buteur" onchange="savePronostic('buteur')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none">
         <option value="">— Choisir un buteur —</option>
-        ${BUTEURS_CDM.map(b => `<option value="${b.nom}">${b.nom} — ${b.cote} pts</option>`).join('')}
+        ${BUTEURS_CDM.map(b => `<option value="${b.nom}" data-cote="${b.cote}">${b.nom} — ${b.cote} pts</option>`).join('')}
       </select>`}
+      ${locked && pronosticsData.buteur ? `<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.buteur}</div>` : ''}
     </div>
   `;
   await chargerPronosticsExistants();
@@ -577,7 +618,7 @@ async function savePronostic(type) {
   const liste = type === 'buteur' ? BUTEURS_CDM : EQUIPES_CDM;
   const cote = liste.find(e => e.nom === val)?.cote || '—';
   const el = document.getElementById(coteId);
-  if (el) el.textContent = `${val} — ${cote} pts`;
+  if (el) el.textContent = `${cote} pts`;
   pronosticsData[type] = val;
   try {
     await fetch(APPS_SCRIPT_URL, {
@@ -586,7 +627,9 @@ async function savePronostic(type) {
       headers: { 'Content-Type': 'text/plain' }
     });
     showToast('✅ Sauvegardé !');
-  } catch(e) { showToast('⚠️ Erreur de sauvegarde'); }
+  } catch(e) {
+    showToast('⚠️ Erreur de sauvegarde');
+  }
 }
 
 // ════ INIT ════
@@ -603,7 +646,6 @@ function init() {
     currentUser = saved;
     showApp();
   }
-  // Rafraîchissement auto toutes les minutes (uniquement si sur l'écran pronos)
   setInterval(() => {
     if (currentUser && document.getElementById('app-screen').style.display !== 'none') renderPhase();
   }, 60000);
@@ -637,7 +679,6 @@ function logout() {
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('historique-screen').style.display = 'none';
   document.getElementById('classement-screen').style.display = 'none';
-  document.getElementById('pronostics-screen').style.display = 'none';
   document.getElementById('input-mdp').value = '';
 }
 
@@ -650,8 +691,7 @@ async function showApp() {
     await Promise.all([chargerTousLesPronos(), chargerCotes()]);
     pronosCharges = true;
   }
-  // FIX : ouvre directement sur phases finales
-  switchPhase('finales');
+switchPhase('finales');
 }
 
 async function chargerCotes() {
@@ -673,13 +713,8 @@ async function chargerTousLesPronos() {
     if (!data.ok) return;
     data.pronos.forEach(p => {
       if (p.prono) pronos[p.row] = String(p.prono);
-      // FIX : vérification plus robuste pour les scores
-      if (p.scoreExt !== '' && p.scoreExt !== null && p.scoreExt !== undefined && p.prono !== '' && p.prono !== null) {
-        const scoreDom = parseInt(p.prono);
-        const scoreExt = parseInt(p.scoreExt);
-        if (!isNaN(scoreDom) && !isNaN(scoreExt)) {
-          scores[p.row] = { dom: scoreDom, ext: scoreExt };
-        }
+      if (p.scoreExt !== '' && p.scoreExt !== null && p.scoreExt !== undefined) {
+        scores[p.row] = { dom: parseInt(p.prono), ext: parseInt(p.scoreExt) };
       }
       if (p.verrouille) {
         matchsVerrouilles.add(p.row);
@@ -754,7 +789,6 @@ function renderMatchs(matchsList, now) {
 }
 
 // ════ BUILD MATCH CARD ════
-// FIX couleurs : reconstruit entièrement la carte à chaque appel pour éviter les bugs de style inline
 function buildMatchCard(match, locked) {
   const card = document.createElement('div');
   const prono = pronos[match.row];
@@ -774,23 +808,27 @@ function buildMatchCard(match, locked) {
   const badgeText = isFinale ? `⭐ ${match.poule}` : `Gr. ${match.poule}`;
 
   let lockBadge = '';
-  let teamDomStyle = 'font-size:18px;font-weight:700;color:var(--text);line-height:1.2;';
-  let teamExtStyle = 'font-size:18px;font-weight:700;color:var(--text);line-height:1.2;';
+  let teamDomStyle = '';
+  let teamExtStyle = '';
   let vsStyle = '';
+  // MODIF : cotes en or par défaut, vert seulement si sélectionnée
   let cote1Color = 'var(--gold)';
   let coteNColor = 'var(--gold)';
   let cote2Color = 'var(--gold)';
+  let cote1Extra = '';
+  let coteNExtra = '';
+  let cote2Extra = '';
 
-  // Surbrillance selon score saisi (phases finales non verrouillées)
+  // Pour phases finales non verrouillées : surbrillance selon score saisi
   if (match.scoreExact && !locked && score) {
     const scoreDom = parseInt(score.dom);
     const scoreExt = parseInt(score.ext);
     if (!isNaN(scoreDom) && !isNaN(scoreExt)) {
       if (scoreDom > scoreExt) {
-        teamDomStyle = 'font-size:18px;font-weight:800;color:var(--green);line-height:1.2;';
+        teamDomStyle = 'color:var(--green);font-weight:800;';
         cote1Color = 'var(--green)';
       } else if (scoreExt > scoreDom) {
-        teamExtStyle = 'font-size:18px;font-weight:800;color:var(--green);line-height:1.2;';
+        teamExtStyle = 'color:var(--green);font-weight:800;';
         cote2Color = 'var(--green)';
       } else {
         vsStyle = 'color:var(--green);font-weight:800;font-size:20px;';
@@ -799,50 +837,55 @@ function buildMatchCard(match, locked) {
     }
   }
 
-  // Surbrillance selon prono (phases groupes non verrouillées)
+  // Pour phases groupes non verrouillées : cote sélectionnée en vert
   if (!match.scoreExact && !locked && prono) {
-    if (prono === '1') cote1Color = 'var(--green)';
-    else if (prono === 'N') coteNColor = 'var(--green)';
-    else if (prono === '2') cote2Color = 'var(--green)';
+    if (prono === '1') { cote1Color = 'var(--green)'; cote1Extra = 'font-weight:800;'; }
+    else if (prono === 'N') { coteNColor = 'var(--green)'; coteNExtra = 'font-weight:800;'; }
+    else if (prono === '2') { cote2Color = 'var(--green)'; cote2Extra = 'font-weight:800;'; }
   }
 
-  // Résultat réel verrouillé
   if (locked && resultatsReels[match.row]) {
     const r = resultatsReels[match.row];
-    const res = String(r.resultat);
-    const scoreExtReel = r.scoreExtReel;
-    const scoreLabel = match.scoreExact && res !== '' && scoreExtReel !== '' ? `${res} - ${scoreExtReel}` : res;
+    const res = r.resultat;
+    const scoreExt = r.scoreExtReel;
+    const scoreLabel = match.scoreExact && res !== '' && scoreExt !== '' ? `${res} - ${scoreExt}` : res;
     lockBadge = `<span class="match-badge badge-lock">✅ ${scoreLabel}</span>`;
-    if (res === '1') {
-      teamDomStyle = 'font-size:18px;font-weight:800;color:#000;background:var(--green);padding:2px 8px;border-radius:6px;line-height:1.4;';
-      cote1Color = 'var(--green)';
-    } else if (res === '2') {
-      teamExtStyle = 'font-size:18px;font-weight:800;color:#000;background:var(--green);padding:2px 8px;border-radius:6px;line-height:1.4;';
-      cote2Color = 'var(--green)';
-    } else if (res === 'N') {
-      coteNColor = 'var(--green)';
+    if (String(res) === '1') {
+      teamDomStyle = 'color:#000;font-weight:800;background:var(--green);padding:2px 8px;border-radius:6px;';
+      cote1Color = 'var(--green)'; cote1Extra = 'font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';
+    } else if (String(res) === '2') {
+      teamExtStyle = 'color:#000;font-weight:800;background:var(--green);padding:2px 8px;border-radius:6px;';
+      cote2Color = 'var(--green)'; cote2Extra = 'font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';
+    } else if (String(res) === 'N') {
+      coteNColor = 'var(--green)'; coteNExtra = 'font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';
     }
   } else if (locked) {
     lockBadge = '<span class="match-badge badge-lock">🔒 Commencé</span>';
   }
 
-  const cotesHtml = match.c1 > 0 ? `<div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote1Color};">${match.c1.toFixed(2)}</div><div class="cote-label">Victoire</div>` : '';
-  const coteNHtml = match.cn > 0 ? `<div style="font-size:17px;font-weight:700;margin-top:3px;color:${coteNColor};">${match.cn.toFixed(2)}</div><div class="cote-label">Nul</div>` : '';
-  const cote2Html = match.c2 > 0 ? `<div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote2Color};">${match.c2.toFixed(2)}</div><div class="cote-label">Victoire</div>` : '';
-
-  // Score input sans labels
+  // MODIF : pas de label au-dessus des scores, score-sep sans margin-top
   const scoreHtml = match.scoreExact && !locked ? `
     <div class="score-input-zone">
       <div class="score-field">
         <input class="score-input" type="number" min="0" max="20" id="score-${match.row}-dom"
-          placeholder="0" value="${score !== undefined ? score.dom : ''}" oninput="handleScore(${match.row})">
+          placeholder="0" value="${score ? score.dom : ''}" oninput="handleScore(${match.row})">
       </div>
       <div class="score-sep">–</div>
       <div class="score-field">
         <input class="score-input" type="number" min="0" max="20" id="score-${match.row}-ext"
-          placeholder="0" value="${score !== undefined ? score.ext : ''}" oninput="handleScore(${match.row})">
+          placeholder="0" value="${score ? score.ext : ''}" oninput="handleScore(${match.row})">
       </div>
     </div>` : '';
+
+  const cotesHtml = match.c1 > 0 ? `
+    <div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote1Color};${cote1Extra}">${match.c1.toFixed(2)}</div>
+    <div class="cote-label">Victoire</div>` : '';
+  const coteNHtml = match.cn > 0 ? `
+    <div style="font-size:17px;font-weight:700;margin-top:3px;color:${coteNColor};${coteNExtra}">${match.cn.toFixed(2)}</div>
+    <div class="cote-label">Nul</div>` : '';
+  const cote2Html = match.c2 > 0 ? `
+    <div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote2Color};${cote2Extra}">${match.c2.toFixed(2)}</div>
+    <div class="cote-label">Victoire</div>` : '';
 
   const btn1Class = prono === '1' ? 'a-1' : '';
   const btnNClass = prono === 'N' ? 'a-n' : '';
@@ -884,15 +927,7 @@ function buildMatchCard(match, locked) {
 
 async function handleProno(row, val) {
   pronos[row] = val;
-  // FIX : reconstruire la carte entièrement pour éviter les bugs de couleur
-  const match = MATCHS_CDM.find(m => m.row === row);
-  if (match) {
-    const oldCard = document.getElementById(`card-${row}`);
-    if (oldCard) {
-      const newCard = buildMatchCard(match, false);
-      oldCard.replaceWith(newCard);
-    }
-  }
+  updateCardUI(row, val);
   await sauvegarder(row, val, null, null);
 }
 
@@ -905,23 +940,40 @@ async function handleScore(row) {
   if (dom === '' || ext === '') return;
   const d = parseInt(dom), e = parseInt(ext);
   if (isNaN(d) || isNaN(e)) return;
-
   scores[row] = { dom: d, ext: e };
   const res = d > e ? '1' : d < e ? '2' : 'N';
   pronos[row] = res;
+  updateCardUI(row, res);
 
-  // FIX : reconstruire la carte entièrement pour éviter les bugs de couleur
-  const match = MATCHS_CDM.find(m => m.row === row);
-  if (match) {
-    const oldCard = document.getElementById(`card-${row}`);
-    if (oldCard) {
-      const newCard = buildMatchCard(match, false);
-      oldCard.replaceWith(newCard);
-      // Remettre le focus sur le bon input après reconstruction
-      const newDomEl = document.getElementById(`score-${row}-dom`);
-      const newExtEl = document.getElementById(`score-${row}-ext`);
-      if (newDomEl) newDomEl.value = d;
-      if (newExtEl) newExtEl.value = e;
+  // MODIF : surbrillance correcte selon qui gagne
+  const card = document.getElementById(`card-${row}`);
+  if (card) {
+    const teamDom = card.querySelector('.match-teams .team:first-child .team-name');
+    const teamExt = card.querySelector('.match-teams .team:last-child .team-name');
+    const vs = card.querySelector('.vs');
+    const coteDom = card.querySelector('.match-teams .team:first-child [style*="font-size:17px"]');
+    const coteExt = card.querySelector('.match-teams .team:last-child [style*="font-size:17px"]');
+    const coteN = card.querySelector('.match-teams > div:nth-child(2) [style*="font-size:17px"]');
+
+    const resetStyle = 'font-size:18px;font-weight:700;color:var(--text);line-height:1.2;';
+    if (teamDom) teamDom.style.cssText = resetStyle;
+    if (teamExt) teamExt.style.cssText = resetStyle;
+    if (vs) vs.style.cssText = '';
+
+    // Reset cotes en or
+    if (coteDom) coteDom.style.color = 'var(--gold)';
+    if (coteExt) coteExt.style.color = 'var(--gold)';
+    if (coteN) coteN.style.color = 'var(--gold)';
+
+    if (res === '1') {
+      if (teamDom) teamDom.style.cssText = 'font-size:18px;font-weight:800;color:var(--green);line-height:1.2;';
+      if (coteDom) coteDom.style.color = 'var(--green)';
+    } else if (res === '2') {
+      if (teamExt) teamExt.style.cssText = 'font-size:18px;font-weight:800;color:var(--green);line-height:1.2;';
+      if (coteExt) coteExt.style.color = 'var(--green)';
+    } else {
+      if (vs) vs.style.cssText = 'color:var(--green);font-weight:800;font-size:20px;';
+      if (coteN) coteN.style.color = 'var(--green)';
     }
   }
 
@@ -948,34 +1000,39 @@ async function sauvegarder(row, prono, scoredom, scoreext) {
     if (data?.error === 'VERROUILLE') {
       showToast('🔒 Match déjà commencé petit coquin 😄');
       delete pronos[row];
-      // Reconstruire la carte avec l'état annulé
-      const match = MATCHS_CDM.find(m => m.row === row);
-      if (match) {
-        const oldCard = document.getElementById(`card-${row}`);
-        if (oldCard) oldCard.replaceWith(buildMatchCard(match, false));
-      }
+      updateCardUI(row, null);
     }
   } catch(e) {
   } finally {
     savingRows.delete(row);
-    const savEl2 = document.getElementById(`saving-${row}`);
-    if (savEl2) savEl2.style.display = 'none';
+    if (savEl) savEl.style.display = 'none';
+  }
+}
+
+function updateCardUI(row, val) {
+  const card = document.getElementById(`card-${row}`);
+  if (!card) return;
+  card.classList.remove('sel-1', 'sel-n', 'sel-2', 'sel-score');
+  if (val === '1') card.classList.add('sel-1');
+  else if (val === 'N') card.classList.add('sel-n');
+  else if (val === '2') card.classList.add('sel-2');
+  ['1','n','2'].forEach(b => {
+    const btn = card.querySelector(`.prono-btn.a-${b}`);
+    if (btn) btn.className = 'prono-btn';
+  });
+  if (val) {
+    const activeBtn = card.querySelector(`[onclick*="handleProno(${row},'${val}')"]`);
+    if (activeBtn) activeBtn.className = `prono-btn a-${val.toLowerCase()}`;
   }
 }
 
 function switchTab(tab) {
-  ['pronos','historique','classement','pronostics'].forEach(t => {
-    const btn = document.getElementById(`nav-${t}`);
-    if (btn) btn.classList.remove('active');
-  });
-  const activeBtn = document.getElementById(`nav-${tab}`);
-  if (activeBtn) activeBtn.classList.add('active');
-
+  ['pronos','historique','classement'].forEach(t => document.getElementById(`nav-${t}`).classList.remove('active'));
+  document.getElementById(`nav-${tab}`).classList.add('active');
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('historique-screen').style.display = 'none';
   document.getElementById('classement-screen').style.display = 'none';
   document.getElementById('pronostics-screen').style.display = 'none';
-
   if (tab === 'pronos') {
     document.getElementById('app-screen').style.display = 'block';
   } else if (tab === 'pronostics') {
@@ -1015,6 +1072,8 @@ async function chargerHistorique() {
       const ptsDuJour = grouped[date].reduce((s, m) => s + (m.points || 0), 0);
       const header = document.createElement('div');
       header.className = 'histo-date-header';
+      header.style.cursor = 'pointer';
+      header.style.userSelect = 'none';
       const isLatest = date === derniereDate;
       header.innerHTML = `<span>${d.toLocaleDateString('fr-FR', {weekday:'long',day:'numeric',month:'long'})}</span><div style="display:flex;align-items:center;gap:10px"><span style="color:var(--amber);font-family:'Bebas Neue',sans-serif;font-size:16px">+${ptsDuJour.toFixed(2)} pts</span><span id="arrow-${date}" style="color:var(--gold);font-size:14px">${isLatest ? '▲' : '▼'}</span></div>`;
       container.appendChild(header);
@@ -1038,12 +1097,13 @@ async function chargerHistorique() {
           const pronoJoueur = String(m.prono);
           const scoreExtJoueur = String(m.scoreExt);
           const resultatK = String(m.resultatK || '');
+          const estScoreExact = bon;
           const bonResultat = resultatK && (
             (parseInt(pronoJoueur) > parseInt(scoreExtJoueur) && resultatK === '1') ||
             (parseInt(pronoJoueur) < parseInt(scoreExtJoueur) && resultatK === '2') ||
             (parseInt(pronoJoueur) === parseInt(scoreExtJoueur) && resultatK === 'N')
           );
-          if (bon) cls = 'bon';
+          if (estScoreExact) cls = 'bon';
           else if (bonResultat) cls = 'partiel';
           else cls = 'mauvais';
         } else {
@@ -1056,7 +1116,9 @@ async function chargerHistorique() {
             <div class="histo-prono ${cls}">${pronoLabel}</div>
             <div class="histo-pts">${m.points > 0 ? '+' + m.points.toFixed(2) : '0'}</div>
           </div>
-          <button class="voir-pronos-btn" onclick="togglePronosTous(${m.row}, this)">👥 Voir les pronos des autres</button>
+          <button class="voir-pronos-btn" onclick="togglePronosTous(${m.row}, this)">
+            👥 Voir les pronos des autres
+          </button>
           <div class="pronos-tous" id="pronos-${m.row}">
             <div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Chargement...</div>
           </div>
@@ -1106,4 +1168,44 @@ async function togglePronosTous(row, btn) {
 
 async function chargerClassement() {
   const container = document.getElementById('classement-container');
-  container.innerHTML = '<div style="text-align:center;padding:40px;co
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Chargement...</div>';
+  try {
+    const res = await fetch(`${APPS_SCRIPT_URL}?action=classement_cdm`);
+    const data = await res.json();
+    if (!data.ok || !data.classement?.length) {
+      container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">Classement non disponible.</div>';
+      return;
+    }
+    document.getElementById('cls-updated').textContent = `Mis à jour : ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
+    container.innerHTML = data.classement.map(p => {
+      const isMoi = p.nom === currentUser;
+      const emoji = p.rang === 1 ? '🥇' : p.rang === 2 ? '🥈' : p.rang === 3 ? '🥉' : '';
+      const rangClass = p.rang <= 3 ? `rang-${p.rang}` : 'rang-other';
+      const gains = {1:'230€',2:'170€',3:'120€',4:'80€',5:'50€',6:'30€',7:'20€'};
+      const gainVal = gains[p.rang] || '';
+      const gainClass = p.rang === 1 ? 'gain-or' : p.rang === 2 ? 'gain-argent' : p.rang === 3 ? 'gain-bronze' : p.rang <= 7 ? 'gain-green' : '';
+      const gainHtml = gainVal ? `<div class="cls-gain ${gainClass}">${gainVal}</div>` : '<div style="min-width:44px"></div>';
+      const borderColor = p.rang === 1 ? 'var(--gold)' : p.rang === 2 ? '#C0C0C0' : p.rang === 3 ? '#CD7F32' : p.rang <= 7 ? 'var(--green)' : 'var(--border)';
+      return `<div class="cls-row ${isMoi ? 'moi' : ''}" style="border-color:${borderColor}">
+        <div class="rang ${rangClass}">${emoji || p.rang}</div>
+        <div class="cls-nom">${p.nom}${isMoi ? ' 👈' : ''}</div>
+        ${gainHtml}
+        <div class="cls-pts">${p.points.toFixed(2)}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--red)">Erreur de chargement.</div>';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+init();
+</script>
+</body>
+</html>
