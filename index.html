@@ -482,22 +482,15 @@ function renderMatchs(matchsList,now) {
   if(passes.length>0){passes.forEach(match=>container.appendChild(buildMatchCard(match,true)));}
 }
 
-function buildMatchCard(match,locked) {
-  const card=document.createElement('div');
-  const prono=pronos[match.row];
-  const score=scores[match.row];
-  let selClass='';
-  if(match.scoreExact&&score)selClass='sel-score';
-  else if(prono==='1')selClass='sel-1';
-  else if(prono==='N')selClass='sel-n';
-  else if(prono==='2')selClass='sel-2';
-  card.className=`match-card ${selClass} ${locked?'locked':''}`;
-  card.id=`card-${match.row}`;
-  const badgeClass=match.scoreExact?'badge-finale':'badge-groupe';
-  const badgeText=match.scoreExact?`⭐ ${match.poule}`:`Gr. ${match.poule}`;
-  let lockBadge='',teamDomStyle='',teamExtStyle='',vsStyle='';
-  let cote1Color='var(--gold)',coteNColor='var(--gold)',cote2Color='var(--gold)';
-  let cote1Extra='',coteNExtra='',cote2Extra='';
+const scoreHtml = match.scoreExact ? (locked ? `
+  <div class="score-input-zone">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--text-muted);padding:10px 20px;">
+      ${score ? score.dom : '—'} – ${score ? score.ext : '—'}
+    </div>
+  </div>` : `
+  <div class="score-input-zone">
+    ...inputs normaux...
+  </div>`) : '';
 
   if(match.scoreExact&&!locked&&score){
     const sd=parseInt(score.dom),se=parseInt(score.ext);
