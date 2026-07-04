@@ -303,10 +303,10 @@ const MATCHS_CDM = [
   {row:108,poule:'16e',date:'2026-07-03',heure:'20h00',datetime:'2026-07-03T20:00:00',dom:'Australie',ext:'Egypte',c1:0,cn:0,c2:0,scoreExact:true},
   {row:109,poule:'16e',date:'2026-07-04',heure:'00h00',datetime:'2026-07-04T00:00:00',dom:'Argentine',ext:'Cap-Vert',c1:0,cn:0,c2:0,scoreExact:true},
   {row:110,poule:'16e',date:'2026-07-04',heure:'03h30',datetime:'2026-07-04T03:30:00',dom:'Colombie',ext:'Ghana',c1:0,cn:0,c2:0,scoreExact:true},
-  {row:112,poule:'8e',date:'2026-07-04',heure:'20h00',datetime:'2026-07-04T20:00:00',dom:'Canada',ext:'Maroc',c1:0,cn:0,c2:0,scoreExact:true},
-  {row:113,poule:'8e',date:'2026-07-04',heure:'23h00',datetime:'2026-07-04T23:00:00',dom:'Paraguay',ext:'France',c1:0,cn:0,c2:0,scoreExact:true},
-  {row:114,poule:'8e',date:'2026-07-05',heure:'22h00',datetime:'2026-07-05T22:00:00',dom:'Brésil',ext:'Norvège',c1:0,cn:0,c2:0,scoreExact:true},
-  {row:115,poule:'8e',date:'2026-07-06',heure:'02h00',datetime:'2026-07-06T02:00:00',dom:'Mexique',ext:'Angleterre',c1:0,cn:0,c2:0,scoreExact:true},
+  {row:112,poule:'8e',date:'2026-07-04',heure:'20h00',datetime:'2026-07-04T20:00:00',dom:'V73',ext:'V74',c1:0,cn:0,c2:0,scoreExact:true},
+  {row:113,poule:'8e',date:'2026-07-04',heure:'23h00',datetime:'2026-07-04T23:00:00',dom:'V75',ext:'V80',c1:0,cn:0,c2:0,scoreExact:true},
+  {row:114,poule:'8e',date:'2026-07-05',heure:'22h00',datetime:'2026-07-05T22:00:00',dom:'V76',ext:'V77',c1:0,cn:0,c2:0,scoreExact:true},
+  {row:115,poule:'8e',date:'2026-07-06',heure:'02h00',datetime:'2026-07-06T02:00:00',dom:'V78',ext:'V83',c1:0,cn:0,c2:0,scoreExact:true},
   {row:116,poule:'8e',date:'2026-07-06',heure:'21h00',datetime:'2026-07-06T21:00:00',dom:'V79',ext:'V82',c1:0,cn:0,c2:0,scoreExact:true},
   {row:117,poule:'8e',date:'2026-07-07',heure:'02h00',datetime:'2026-07-07T02:00:00',dom:'V81',ext:'V84',c1:0,cn:0,c2:0,scoreExact:true},
   {row:118,poule:'8e',date:'2026-07-07',heure:'18h00',datetime:'2026-07-07T18:00:00',dom:'V85',ext:'V86',c1:0,cn:0,c2:0,scoreExact:true},
@@ -514,15 +514,26 @@ function buildMatchCard(match,locked) {
   }
   if(locked&&resultatsReels[match.row]){
     const r=resultatsReels[match.row];
-    const res=r.resultat,scoreExt=r.scoreExtReel;
-    const scoreLabel=match.scoreExact&&res!==''&&scoreExt!==''?`${res} - ${scoreExt}`:res;
-    lockBadge=`<span class="match-badge badge-lock">✅ ${scoreLabel}</span>`;
-    if(String(res)==='1'){teamDomStyle='color:#000;font-weight:800;background:var(--green);padding:2px 8px;border-radius:6px;';cote1Color='var(--green)';cote1Extra='font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';}
-    else if(String(res)==='2'){teamExtStyle='color:#000;font-weight:800;background:var(--green);padding:2px 8px;border-radius:6px;';cote2Color='var(--green)';cote2Extra='font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';}
-    else if(String(res)==='N'){coteNColor='var(--green)';coteNExtra='font-weight:800;background:var(--green);color:#000;border-radius:4px;padding:2px 8px;';}
+    const res=r.resultat,scoreExtReel=r.scoreExtReel;
+    const scoreLabel=match.scoreExact&&res!==''&&scoreExtReel!==''?`${res} - ${scoreExtReel}`:res;
+    lockBadge=`<div style="text-align:center;padding:6px 0 2px;"><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;background:var(--green-dim);color:var(--green);border:1px solid #00e67640;border-radius:6px;padding:4px 14px;">✅ ${scoreLabel}</span></div>`;
   }else if(locked){lockBadge='<span class="match-badge badge-lock">🔒 Commencé</span>';}
 
-  const scoreHtml=match.scoreExact?(locked?`<div class="score-input-zone"><div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--text-muted);padding:8px 20px;">${score?score.dom:'—'} – ${score?score.ext:'—'}</div></div>`:`<div class="score-input-zone"><div class="score-field"><input class="score-input" type="number" min="0" max="20" id="score-${match.row}-dom" placeholder="0" value="${score?score.dom:''}" oninput="handleScore(${match.row})"></div><div class="score-sep">–</div><div class="score-field"><input class="score-input" type="number" min="0" max="20" id="score-${match.row}-ext" placeholder="0" value="${score?score.ext:''}" oninput="handleScore(${match.row})"></div></div>`):'';
+  let pronoColor = 'var(--text-muted)';
+  if(locked && match.scoreExact && score && resultatsReels[match.row]) {
+    const r = resultatsReels[match.row];
+    const resDom = String(r.resultat), resExt = String(r.scoreExtReel);
+    const pronoDom = String(score.dom), pronoExt = String(score.ext);
+    const scoreExact = pronoDom === resDom && pronoExt === resExt;
+    const resultatK = parseInt(resDom) > parseInt(resExt) ? '1' : parseInt(resDom) < parseInt(resExt) ? '2' : 'N';
+    const bonResultat = (parseInt(pronoDom) > parseInt(pronoExt) && resultatK === '1') ||
+                        (parseInt(pronoDom) < parseInt(pronoExt) && resultatK === '2') ||
+                        (parseInt(pronoDom) === parseInt(pronoExt) && resultatK === 'N');
+    if(scoreExact) pronoColor = 'var(--green)';
+    else if(bonResultat) pronoColor = 'var(--amber)';
+    else pronoColor = 'var(--red)';
+  }
+  const scoreHtml=match.scoreExact?(locked?`<div class="score-input-zone"><div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:${pronoColor};padding:8px 20px;">${score?score.dom:'—'} – ${score?score.ext:'—'}</div></div>`:`<div class="score-input-zone"><div class="score-field"><input class="score-input" type="number" min="0" max="20" id="score-${match.row}-dom" placeholder="0" value="${score?score.dom:''}" oninput="handleScore(${match.row})"></div><div class="score-sep">–</div><div class="score-field"><input class="score-input" type="number" min="0" max="20" id="score-${match.row}-ext" placeholder="0" value="${score?score.ext:''}" oninput="handleScore(${match.row})"></div></div>`):'';
   const cotesHtml=match.c1>0?`<div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote1Color};${cote1Extra}">${match.c1.toFixed(2)}</div><div class="cote-label">Victoire</div>`:'';
   const coteNHtml=match.cn>0?`<div style="font-size:17px;font-weight:700;margin-top:3px;color:${coteNColor};${coteNExtra}">${match.cn.toFixed(2)}</div><div class="cote-label">Nul</div>`:'';
   const cote2Html=match.c2>0?`<div style="font-size:17px;font-weight:700;margin-top:3px;color:${cote2Color};${cote2Extra}">${match.c2.toFixed(2)}</div><div class="cote-label">Victoire</div>`:'';
@@ -531,11 +542,11 @@ function buildMatchCard(match,locked) {
   card.innerHTML=`
     <div class="match-header">
       <span class="match-meta">${match.heure} · ${new Date(match.datetime).toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}</span>
-      <div style="display:flex;gap:5px;align-items:center">${lockBadge}<span class="match-badge ${badgeClass}">${badgeText}</span></div>
+      <div style="display:flex;gap:5px;align-items:center">${locked&&resultatsReels[match.row]?'':lockBadge}<span class="match-badge ${badgeClass}">${badgeText}</span></div>
     </div>
     <div class="match-teams">
       <div class="team"><div class="team-name" style="${teamDomStyle}">${match.dom}</div>${cotesHtml}</div>
-      <div style="display:flex;flex-direction:column;align-items:center"><div class="vs" style="${vsStyle}">VS</div>${coteNHtml}</div>
+      <div style="display:flex;flex-direction:column;align-items:center"><div class="vs" style="${vsStyle}">${locked&&resultatsReels[match.row]?`<span style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--text);">${resultatsReels[match.row].resultat}<span style="color:var(--text-muted);font-size:20px;margin:0 4px;">—</span>${resultatsReels[match.row].scoreExtReel}</span>`:"VS"}</div>${coteNHtml}</div>
       <div class="team"><div class="team-name" style="${teamExtStyle}">${match.ext}</div>${cote2Html}</div>
     </div>
     ${!locked&&!match.scoreExact?`<div class="prono-buttons"><button class="prono-btn ${btn1Class}" onclick="handleProno(${match.row},'1')">1</button><button class="prono-btn ${btnNClass}" onclick="handleProno(${match.row},'N')">N</button><button class="prono-btn ${btn2Class}" onclick="handleProno(${match.row},'2')">2</button></div>`:''}
