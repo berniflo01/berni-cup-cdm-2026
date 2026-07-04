@@ -649,13 +649,13 @@ async function chargerHistorique() {
         let cls='neutre';
         if(m.resultat){
           if(m.scoreExact){
-            // Score exact : comparer "pronoDom-pronoExtVal" avec "resultatDom-resultatExtVal"
-            const estExact=m.pronoDom===m.resultatDom&&m.pronoExtVal===m.resultatExtVal;
-            const bonResultat=m.resultatK&&(
-              (parseInt(m.pronoDom)>parseInt(m.pronoExtVal)&&m.resultatK==='1')||
-              (parseInt(m.pronoDom)<parseInt(m.pronoExtVal)&&m.resultatK==='2')||
-              (parseInt(m.pronoDom)===parseInt(m.pronoExtVal)&&m.resultatK==='N')
-            );
+            // m.prono = "0-2", m.resultat = "0-1"
+            const [pronoDom,pronoExt] = m.prono.split('-').map(Number);
+            const [resDom,resExt] = m.resultat.split('-').map(Number);
+            const estExact = pronoDom===resDom && pronoExt===resExt;
+            const resK = resDom>resExt?'1':resDom<resExt?'2':'N';
+            const pronoK = pronoDom>pronoExt?'1':pronoDom<pronoExt?'2':'N';
+            const bonResultat = pronoK===resK;
             if(estExact)cls='bon';else if(bonResultat)cls='partiel';else cls='mauvais';
           }else{
             cls=String(m.prono)===String(m.resultat)?'bon':'mauvais';
