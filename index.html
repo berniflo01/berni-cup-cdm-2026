@@ -651,22 +651,28 @@ async function chargerHistorique() {
       const card=document.createElement('div');card.className='histo-match-card';card.id=`card-date-${date}`;card.style.display=isLatest?'block':'none';
       header.onclick=()=>{const arrow=document.getElementById(`arrow-${date}`);const c=document.getElementById(`card-date-${date}`);if(c.style.display==='none'){c.style.display='block';arrow.textContent='▲';}else{c.style.display='none';arrow.textContent='▼';}};
       card.innerHTML=grouped[date].map(m=>{
-        const pronoLabel=m.prono||'—';
-        let cls='neutre';
-        if(m.resultat){
-          if(m.scoreExact){
-            // m.prono = "0-2", m.resultat = "0-1"
-            const [pronoDom,pronoExt] = m.prono.split('-').map(Number);
-            const [resDom,resExt] = m.resultat.split('-').map(Number);
+        const pronoLabel = m.prono || '—';
+        let cls = 'neutre';
+
+        if(m.scoreExact) {
+          // ── PHASES FINALES : prono = "2-0", resultat = "1-1" ──
+          if(m.resultat && m.resultat.includes('-') && m.prono && m.prono.includes('-')) {
+            const [pronoDom, pronoExt] = m.prono.split('-').map(Number);
+            const [resDom, resExt] = m.resultat.split('-').map(Number);
             const estExact = pronoDom===resDom && pronoExt===resExt;
             const resK = resDom>resExt?'1':resDom<resExt?'2':'N';
             const pronoK = pronoDom>pronoExt?'1':pronoDom<pronoExt?'2':'N';
-            const bonResultat = pronoK===resK;
-            if(estExact)cls='bon';else if(bonResultat)cls='partiel';else cls='mauvais';
-          }else{
-            cls=String(m.prono)===String(m.resultat)?'bon':'mauvais';
+            if(estExact) cls='bon';
+            else if(pronoK===resK) cls='partiel';
+            else cls='mauvais';
+          }
+        } else {
+          // ── PHASES DE GROUPES : prono = "1"/"N"/"2", resultat = "1"/"N"/"2" ──
+          if(m.resultat) {
+            cls = String(m.prono)===String(m.resultat) ? 'bon' : 'mauvais';
           }
         }
+
         return `<div>
           <div class="histo-match-row">
             <div class="histo-teams">${m.dom} / ${m.ext}</div>
@@ -693,23 +699,27 @@ async function togglePronosTous(row,btn) {
     const res=await fetch(`${APPS_SCRIPT_URL}?action=pronos_match&row=${row}`);
     const data=await res.json();
     if(!data.ok||!data.pronos?.length){container.innerHTML='<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Aucun prono disponible.</div>';return;}
-    const resultatReel=resultatsReels[row]?.resultat||'';
-    const isFinaleRow=row>=95;
-    let resK='';
-    if(resultatReel&&isFinaleRow&&resultatReel.includes('-')){
-      const [rd,re]=resultatReel.split('-').map(Number);
-      resK=rd>re?'1':rd<re?'2':'N';
+    const resultatReel = resultatsReels[row]?.resultat || '';
+    const isFinaleRow = row >= 95;
+    let resK = '';
+    if(isFinaleRow && resultatReel && resultatReel.includes('-')) {
+      const [rd, re] = resultatReel.split('-').map(Number);
+      resK = rd>re ? '1' : rd<re ? '2' : 'N';
     }
     container.innerHTML=data.pronos.map(p=>{
-      let cls='neutre';
-      if(resultatReel){
-        if(isFinaleRow&&p.prono.includes('-')){
-          const estExact=p.prono===resultatReel;
-          const [pd,pe]=p.prono.split('-').map(Number);
-          const pronoK=pd>pe?'1':pd<pe?'2':'N';
-          if(estExact)cls='bon';else if(pronoK===resK)cls='partiel';else cls='mauvais';
-        }else{
-          cls=String(p.prono)===String(resultatReel)?'bon':'mauvais';
+      let cls = 'neutre';
+      if(resultatReel) {
+        if(isFinaleRow && p.prono && p.prono.includes('-')) {
+          // Phases finales : p.prono = "2-0", resultatReel = "1-1"
+          const estExact = p.prono === resultatReel;
+          const [pd, pe] = p.prono.split('-').map(Number);
+          const pronoK = pd>pe ? '1' : pd<pe ? '2' : 'N';
+          if(estExact) cls = 'bon';
+          else if(pronoK === resK) cls = 'partiel';
+          else cls = 'mauvais';
+        } else {
+          // Phases de groupes : p.prono = "1"/"N"/"2"
+          cls = String(p.prono) === String(resultatReel) ? 'bon' : 'mauvais';
         }
       }
       const isMoi=p.nom===currentUser||p.nom.toLowerCase()===currentUser.toLowerCase();
