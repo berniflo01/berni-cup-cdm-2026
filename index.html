@@ -442,7 +442,15 @@ async function chargerTousLesPronos() {
       } else if(p.scoreExt!==''&&p.scoreExt!==null&&p.scoreExt!==undefined){
         scores[p.row]={dom:parseInt(p.prono),ext:parseInt(p.scoreExt)};
       }
-      if(p.verrouille){matchsVerrouilles.add(p.row);resultatsReels[p.row]={resultat:p.resultat,scoreExtReel:p.scoreExtReel};}
+      if(p.verrouille){
+        matchsVerrouilles.add(p.row);
+        // resultat/scoreExtReel restent séparés (ex: "0" et "1") pour l'affichage entre équipes.
+        // resultatCombine = "0-1" est ajouté séparément pour les comparaisons de couleur.
+        const resultatCombine = p.row>=95 && p.resultat!=='' && p.scoreExtReel!==''
+          ? String(p.resultat)+'-'+String(p.scoreExtReel)
+          : p.resultat;
+        resultatsReels[p.row]={resultat:p.resultat, scoreExtReel:p.scoreExtReel, resultatCombine};
+      }
     });
   }catch(e){}
 }
@@ -699,8 +707,10 @@ async function togglePronosTous(row,btn) {
     const res=await fetch(`${APPS_SCRIPT_URL}?action=pronos_match&row=${row}`);
     const data=await res.json();
     if(!data.ok||!data.pronos?.length){container.innerHTML='<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Aucun prono disponible.</div>';return;}
-    const resultatReel = resultatsReels[row]?.resultat || '';
     const isFinaleRow = row >= 95;
+    const resultatReel = isFinaleRow
+      ? (resultatsReels[row]?.resultatCombine || '')
+      : (resultatsReels[row]?.resultat || '');
     let resK = '';
     if(isFinaleRow && resultatReel && resultatReel.includes('-')) {
       const [rd, re] = resultatReel.split('-').map(Number);
