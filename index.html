@@ -335,22 +335,61 @@ async function renderPronostics() {
   const locked=pronosticsVerrouilles;
   if(locked){document.getElementById('prono-deadline-info').textContent='🔒 Verrouillé depuis le 11 juin 21h00';document.getElementById('prono-deadline-info').style.color='var(--red)';}
   container.innerHTML=`
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);margin-bottom:12px">🥇 Champion du Monde</div>
-      <div id="cote-premier" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
-      ${locked?(pronosticsData.premier?`<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.premier}</div>`:''):`<select id="sel-premier" onchange="savePronostic('premier')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none"><option value="">— Choisir une équipe —</option>${EQUIPES_CDM.map(e=>`<option value="${e.nom}">${e.nom} — ${e.cote} pts</option>`).join('')}</select>`}
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden">
+      <div style="padding:16px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);margin-bottom:12px">🥇 Champion du Monde</div>
+        <div id="cote-premier" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
+        ${locked?(pronosticsData.premier?`<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.premier}</div>`:''):`<select id="sel-premier" onchange="savePronostic('premier')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none"><option value="">— Choisir une équipe —</option>${EQUIPES_CDM.map(e=>`<option value="${e.nom}">${e.nom} — ${e.cote} pts</option>`).join('')}</select>`}
+      </div>
+      ${locked?`<button class="voir-pronos-btn" onclick="togglePronosticsTous('premier',this)">👥 Voir les pronos des autres</button><div class="pronos-tous" id="pronostics-premier"><div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Chargement...</div></div>`:''}
     </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);margin-bottom:12px">🥈 Finaliste</div>
-      <div id="cote-deuxieme" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
-      ${locked?(pronosticsData.deuxieme?`<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.deuxieme}</div>`:''):`<select id="sel-deuxieme" onchange="savePronostic('deuxieme')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none"><option value="">— Choisir une équipe —</option>${EQUIPES_CDM.map(e=>`<option value="${e.nom}">${e.nom} — ${e.cote} pts</option>`).join('')}</select>`}
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden">
+      <div style="padding:16px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);margin-bottom:12px">🥈 Finaliste</div>
+        <div id="cote-deuxieme" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
+        ${locked?(pronosticsData.deuxieme?`<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.deuxieme}</div>`:''):`<select id="sel-deuxieme" onchange="savePronostic('deuxieme')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none"><option value="">— Choisir une équipe —</option>${EQUIPES_CDM.map(e=>`<option value="${e.nom}">${e.nom} — ${e.cote} pts</option>`).join('')}</select>`}
+      </div>
+      ${locked?`<button class="voir-pronos-btn" onclick="togglePronosticsTous('deuxieme',this)">👥 Voir les pronos des autres</button><div class="pronos-tous" id="pronostics-deuxieme"><div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Chargement...</div></div>`:''}
     </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);margin-bottom:12px">⚽ Meilleur Buteur</div>
-      <div id="cote-buteur" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
-      ${locked?(pronosticsData.buteur?`<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.buteur}</div>`:''):`<select id="sel-buteur" onchange="savePronostic('buteur')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none"><option value="">— Choisir un buteur —</option>${BUTEURS_CDM.map(b=>`<option value="${b.nom}">${b.nom} — ${b.cote} pts</option>`).join('')}</select>`}
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden">
+      <div style="padding:16px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold);margin-bottom:12px">⚽ Meilleur Buteur</div>
+        <div id="cote-buteur" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--green);margin-bottom:10px">—</div>
+        ${locked?(pronosticsData.buteur?`<div style="font-size:16px;font-weight:700;color:var(--text)">${pronosticsData.buteur}</div>`:''):`<select id="sel-buteur" onchange="savePronostic('buteur')" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;padding:12px;outline:none;appearance:none;-webkit-appearance:none"><option value="">— Choisir un buteur —</option>${BUTEURS_CDM.map(b=>`<option value="${b.nom}">${b.nom} — ${b.cote} pts</option>`).join('')}</select>`}
+      </div>
+      ${locked?`<button class="voir-pronos-btn" onclick="togglePronosticsTous('buteur',this)">👥 Voir les pronos des autres</button><div class="pronos-tous" id="pronostics-buteur"><div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Chargement...</div></div>`:''}
     </div>`;
   await chargerPronosticsExistants();
+}
+
+let pronosticsTousData = null;
+
+async function togglePronosticsTous(type, btn) {
+  const container = document.getElementById(`pronostics-${type}`);
+  if (!container) return;
+  const isOpen = container.classList.contains('open');
+  if (isOpen) { container.classList.remove('open'); btn.textContent = '👥 Voir les pronos des autres'; return; }
+  container.classList.add('open'); btn.textContent = '👆 Masquer les pronos';
+  if (container.dataset.loaded) return;
+  try {
+    if (!pronosticsTousData) {
+      const res = await fetch(`${APPS_SCRIPT_URL}?action=pronostics_tous`);
+      const data = await res.json();
+      if (!data.ok) { container.innerHTML = '<div style="text-align:center;color:var(--red);font-size:12px;padding:8px">Erreur de chargement.</div>'; return; }
+      pronosticsTousData = data.pronostics;
+    }
+    const valeurMoi = pronosticsData[type] || '';
+    const filtered = pronosticsTousData.filter(p => p[type]);
+    if (!filtered.length) { container.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:12px;padding:8px">Aucun prono disponible.</div>'; return; }
+    container.innerHTML = filtered.map(p => {
+      const isMoi = p.nom === currentUser || p.nom.toLowerCase() === currentUser.toLowerCase();
+      const cls = p[type] === valeurMoi ? 'bon' : 'neutre';
+      return `<div class="prono-joueur-row" style="${isMoi?'background:var(--gold-dim);border-radius:4px;padding:5px 6px;':''}"><div class="prono-joueur-nom">${p.nom}${isMoi?' 👈':''}</div><div class="prono-joueur-val ${cls}">${p[type]}</div></div>`;
+    }).join('');
+    container.dataset.loaded = '1';
+  } catch(e) {
+    container.innerHTML = '<div style="text-align:center;color:var(--red);font-size:12px;padding:8px">Erreur de chargement.</div>';
+  }
 }
 
 async function chargerPronosticsExistants() {
